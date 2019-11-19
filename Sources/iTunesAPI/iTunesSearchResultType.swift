@@ -8,5 +8,5 @@
 import Foundation
 
 public enum iTunesSearchResultType: String, Codable {
-    case track, collection, artist
+    case track, collection, artist, unknown
 }
