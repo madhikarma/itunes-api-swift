@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bucket
+   uuid = "181E07FA-D912-4427-B853-356735D712C3"
+   type = "1"
+   version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "DE1FD733-30BA-44BD-B884-D58607177FCE"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Tests/iTunesAPITests/iTunesAPITests.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "11"
+            endingLineNumber = "11"
+            landmarkName = "testGetSearchResults()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "DE1FD733-30BA-44BD-B884-D58607177FCE - 6cc800fbbc776f94"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Result&lt;Swift.Array&lt;iTunesAPI.iTunesSearchResult&gt;, iTunesAPI.iTunesSearchError&gt;) -&gt; () in iTunesAPITests.iTunesAPITests.testGetSearchResults() -&gt; ()"
+                  moduleName = "iTunesAPITests"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/beta/Documents/workspace/ios/itunes-api-swift/Tests/iTunesAPITests/iTunesAPITests.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "12"
+                  endingLineNumber = "12"
+                  offsetFromSymbolStart = "240">
+               </Location>
+               <Location
+                  uuid = "DE1FD733-30BA-44BD-B884-D58607177FCE - 6cc800fbbc776f94"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Result&lt;Swift.Array&lt;iTunesAPI.iTunesSearchResult&gt;, iTunesAPI.iTunesSearchError&gt;) -&gt; () in iTunesAPITests.iTunesAPITests.testGetSearchResults() -&gt; ()"
+                  moduleName = "iTunesAPITests"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/beta/Documents/workspace/ios/itunes-api-swift/Tests/iTunesAPITests/iTunesAPITests.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "12"
+                  endingLineNumber = "12"
+                  offsetFromSymbolStart = "280">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "6DA2D4E9-6482-4208-8A27-286E080FFDD4"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Sources/iTunesAPI/File.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "8"
+            endingLineNumber = "8"
+            landmarkName = "unknown"
+            landmarkType = "0">
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
+</Bucket>
