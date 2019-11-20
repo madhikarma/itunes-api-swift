@@ -13,6 +13,7 @@ public struct iTunesSearchResult: Codable {
     public let artistViewUrl: URL?
     public let artworkUrl100: URL?
     public let collectionType: iTunesSearchResultCollectionType?
+    public let collectionName: String?
     public let wrapperType: iTunesSearchResultType
 
     public init(from decoder: Decoder) throws {
@@ -24,5 +25,6 @@ public struct iTunesSearchResult: Codable {
         self.artworkUrl100 = try container.decodeIfPresent(URL.self, forKey: .artworkUrl100) ?? nil
         self.wrapperType = try container.decode(iTunesSearchResultType.self, forKey: .wrapperType)
         self.collectionType = try container.decodeIfPresent(iTunesSearchResultCollectionType.self, forKey: .collectionType) ?? nil
+        self.collectionName = try container.decodeIfPresent(String.self, forKey: .collectionName) ?? nil
     }
 }
