@@ -57,15 +57,14 @@ public class iTunesSearchAPI {
         urlComponents.scheme = "https"
         urlComponents.host = "itunes.apple.com"
         urlComponents.path = "/lookup"
+        urlComponents.queryItems = [URLQueryItem(name: "id", value: "\(id)")]
         
-        var queryItems: [URLQueryItem] = []
         if let queryParameters = parameters {
-            for (key, value) in queryParameters {
-                queryItems.append(URLQueryItem(name: key, value: value))
+            let queryItems: [URLQueryItem] = queryParameters.map { (key: String, value: String) in
+                return URLQueryItem(name: key, value: value)
             }
-            urlComponents.queryItems = queryItems
+            urlComponents.queryItems?.append(contentsOf: queryItems)
         }
-
         guard let url = urlComponents.url else {
             fatalError("Error: expected iTunes URL but instead it is nil")
         }
