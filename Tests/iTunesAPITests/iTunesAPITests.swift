@@ -2,14 +2,16 @@ import XCTest
 @testable import iTunesAPI
 
 final class iTunesAPITests: XCTestCase {
+    
     func testGetSearchResults() {
         let searchAPI = iTunesSearchAPI()
         let expectation = XCTestExpectation()
         searchAPI.getResults(searchTerm: "Bonobo") { (result) in
             expectation.fulfill()
             switch result {
-            case .success(let searchResults):
-                XCTAssertTrue(searchResults.count > 0)
+            case .success(let values):
+                print("search success: \(values)")
+                XCTAssertTrue(values.count > 0)
             case .failure(let error):
                 XCTFail("Error: expected search results but instead there was an error: \(error)")
             }
@@ -20,8 +22,8 @@ final class iTunesAPITests: XCTestCase {
     func testGetLookupResults() {
         let searchAPI = iTunesSearchAPI()
         let expectation = XCTestExpectation()
-        let waiter = XCTWaiter()
-        
+        let lookupExpectation = XCTestExpectation()
+
         // 1
         searchAPI.getResults(searchTerm: "Bonobo") { (result) in
             expectation.fulfill()
@@ -32,25 +34,25 @@ final class iTunesAPITests: XCTestCase {
                     return
                 }
                 // 2
-                let lookupExpectation = XCTestExpectation()
                 searchAPI.lookup(id: id, parameters: ["entity": "album"]) { (lookupResult) in
                     switch lookupResult {
-                        case .success(let searchResults):
-                            XCTAssertTrue(searchResults.count > 0)
+                        case .success(let values):
+                            print("lookup success: \(values)")
+                            XCTAssertTrue(values.count > 0)
                         case .failure(let error):
                             XCTFail("Error: expected search results but instead there was an error: \(error)")
                         }
-                    }
-                waiter.wait(for: [lookupExpectation], timeout: 5)
+                    lookupExpectation.fulfill()
+                }
             case .failure(let error):
                 XCTFail("Error: expected looks results but instead there was an error: \(error)")
             }
         }
-        waiter.wait(for: [expectation], timeout: 5)
+        wait(for: [expectation, lookupExpectation], timeout: 10.0)
     }
-
 
     static var allTests = [
         ("testGetSearchResults", testGetSearchResults),
+        ("testGetLookupResults", testGetLookupResults),
     ]
 }
