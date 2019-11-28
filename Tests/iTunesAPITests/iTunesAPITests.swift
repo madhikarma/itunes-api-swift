@@ -6,7 +6,7 @@ final class iTunesAPITests: XCTestCase {
     func testGetSearchResults() {
         let searchAPI = iTunesSearchAPI()
         let expectation = XCTestExpectation()
-        searchAPI.getResults(searchTerm: "Bonobo") { (result) in
+        searchAPI.getResults(searchTerm: "Bonobo", parameters: ["entity": "allArtist", "attribute": "allArtistTerm"]) { (result) in
             expectation.fulfill()
             switch result {
             case .success(let values):
@@ -25,7 +25,7 @@ final class iTunesAPITests: XCTestCase {
         let lookupExpectation = XCTestExpectation()
 
         // 1
-        searchAPI.getResults(searchTerm: "Bonobo") { (result) in
+        searchAPI.getResults(searchTerm: "Bonobo", parameters: nil) { (result) in
             expectation.fulfill()
             switch result {
             case .success(let searchResults):
