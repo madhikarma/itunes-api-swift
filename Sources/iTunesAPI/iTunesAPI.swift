@@ -22,8 +22,8 @@ public class iTunesSearchAPI {
     // MARK: - Search
     
     @discardableResult
-    public func getResults(searchTerm: String, completion: @escaping (Result<[iTunesSearchResult], iTunesSearchError>) -> ()) -> URLSessionTask {
-        let url = buildSearchURL(searchTerm: searchTerm)
+    public func getResults(searchTerm: String, parameters: [String: String]?, completion: @escaping (Result<[iTunesSearchResult], iTunesSearchError>) -> ()) -> URLSessionTask {
+        let url = buildSearchURL(searchTerm: searchTerm, parameters: parameters)
         let task = session.dataTask(with: url) { (data, response, error) in
             let result = self.parseResponse(data: data, response: response, error: error)
             DispatchQueue.main.async {
@@ -71,13 +71,19 @@ public class iTunesSearchAPI {
         return url
     }
     
-    private func buildSearchURL(searchTerm: String) -> URL {
+    private func buildSearchURL(searchTerm: String, parameters: [String: String]?) -> URL {
         var urlComponents = URLComponents()
         urlComponents.scheme = "https"
         urlComponents.host = "itunes.apple.com"
         urlComponents.path = "/search"
         urlComponents.queryItems = [URLQueryItem(name: "term", value: searchTerm)]
 
+        if let queryParameters = parameters {
+            let queryItems: [URLQueryItem] = queryParameters.map { (key: String, value: String) in
+                return URLQueryItem(name: key, value: value)
+            }
+            urlComponents.queryItems?.append(contentsOf: queryItems)
+        }
         guard let url = urlComponents.url else {
             fatalError("Error: expected iTunes URL but instead it is nil")
         }
