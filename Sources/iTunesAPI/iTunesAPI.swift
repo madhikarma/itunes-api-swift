@@ -9,13 +9,14 @@ import Foundation
 public class iTunesSearchAPI {
     
     private let session: URLSession
-    private let jsonDecoder: JSONDecoder = JSONDecoder()
+    private let decoder: JSONDecoder
     
     
     // MARK: - Initialisers
     
-    public init(session: URLSession = URLSession.shared) {
+    public init(session: URLSession = URLSession.shared, decoder: JSONDecoder = JSONDecoder()) {
         self.session = session
+        self.decoder = decoder
     }
     
     
@@ -23,6 +24,7 @@ public class iTunesSearchAPI {
     
     @discardableResult
     public func getResults(searchTerm: String, parameters: [String: String]?, completion: @escaping (Result<[iTunesSearchResult], iTunesSearchError>) -> ()) -> URLSessionTask {
+        
         let url = buildSearchURL(searchTerm: searchTerm, parameters: parameters)
         let task = session.dataTask(with: url) { (data, response, error) in
             let result = self.parseResponse(data: data, response: response, error: error)
@@ -90,13 +92,16 @@ public class iTunesSearchAPI {
         return url
     }
 
+    
+    // MARK: - Private
+    
     private func parseResponse(data: Data?, response: URLResponse?, error: Error?) -> Result<[iTunesSearchResult], iTunesSearchError> {
         guard let jsonData = data else {
             return .failure(iTunesSearchError.missingData)
         }
         
         do {
-            let searchResponse = try jsonDecoder.decode(iTunesSearchResponse.self, from: jsonData)
+            let searchResponse = try decoder.decode(iTunesSearchResponse.self, from: jsonData)
             return .success(searchResponse.results)
         } catch (let jsonError) {
             return .failure(iTunesSearchError.badData(jsonError))
