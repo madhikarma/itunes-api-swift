@@ -3,21 +3,21 @@ import XCTest
 
 final class iTunesAPITests: XCTestCase {
     
-    func testGetSearchResults() {
-        let searchAPI = iTunesSearchAPI()
-        let expectation = XCTestExpectation()
-        searchAPI.getResults(searchTerm: "Bonobo", parameters: ["entity": "allArtist", "attribute": "allArtistTerm"]) { (result) in
-            expectation.fulfill()
-            switch result {
-            case .success(let values):
-                print("search success: \(values)")
-                XCTAssertTrue(values.count > 0)
-            case .failure(let error):
-                XCTFail("Error: expected search results but instead there was an error: \(error)")
-            }
-        }
-        XCTWaiter().wait(for: [expectation], timeout: 5)
-    }
+//    func testGetSearchResults() {
+//        let searchAPI = iTunesSearchAPI()
+//        let expectation = XCTestExpectation()
+//        searchAPI.getResults(searchTerm: "Bonobo", parameters: ["entity": "allArtist", "attribute": "allArtistTerm"]) { (result) in
+//            expectation.fulfill()
+//            switch result {
+//            case .success(let values):
+//                print("search success: \(values)")
+//                XCTAssertTrue(values.count > 0)
+//            case .failure(let error):
+//                XCTFail("Error: expected search results but instead there was an error: \(error)")
+//            }
+//        }
+//        XCTWaiter().wait(for: [expectation], timeout: 5)
+//    }
     
     func testGetLookupResults() {
         let searchAPI = iTunesSearchAPI()
@@ -52,7 +52,7 @@ final class iTunesAPITests: XCTestCase {
     }
 
     static var allTests = [
-        ("testGetSearchResults", testGetSearchResults),
+//        ("testGetSearchResults", testGetSearchResults),
         ("testGetLookupResults", testGetLookupResults),
     ]
 }

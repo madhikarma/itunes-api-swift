@@ -55,56 +55,57 @@ public class iTunesSearchAPI {
     // MARK: - Private
     
     private func buildLookupURL(id: Int, parameters: [String: String]?) -> URL {
+
+        var queryParameters = ["id": "\(id)"]
+        if let _ = parameters {
+            queryParameters.merge(parameters!) { $1 }
+        }
+        return buildURL(path: "/lookup", parameters: queryParameters)
+    }
+    
+    private func buildSearchURL(searchTerm: String, parameters: [String: String]?) -> URL {
+        
+        var queryParameters = ["term": searchTerm]
+        if let _ = parameters {
+            queryParameters.merge(parameters!) { $1 }
+        }
+        return buildURL(path: "/search", parameters: queryParameters)
+    }
+
+    private func buildURL(path: String, parameters: [String: String]?) -> URL {
+        
         var urlComponents = URLComponents()
         urlComponents.scheme = "https"
         urlComponents.host = "itunes.apple.com"
-        urlComponents.path = "/lookup"
-        urlComponents.queryItems = [URLQueryItem(name: "id", value: "\(id)")]
-        
-        if let queryParameters = parameters {
-            let queryItems: [URLQueryItem] = queryParameters.map { (key: String, value: String) in
-                return URLQueryItem(name: key, value: value)
-            }
-            urlComponents.queryItems?.append(contentsOf: queryItems)
+        urlComponents.path = path
+        urlComponents.queryItems = parameters?.map { (key: String, value: String) in
+            return URLQueryItem(name: key, value: value)
         }
+        
         guard let url = urlComponents.url else {
             fatalError("Error: expected iTunes URL but instead it is nil")
         }
         return url
     }
     
-    private func buildSearchURL(searchTerm: String, parameters: [String: String]?) -> URL {
-        var urlComponents = URLComponents()
-        urlComponents.scheme = "https"
-        urlComponents.host = "itunes.apple.com"
-        urlComponents.path = "/search"
-        urlComponents.queryItems = [URLQueryItem(name: "term", value: searchTerm)]
-
-        if let queryParameters = parameters {
-            let queryItems: [URLQueryItem] = queryParameters.map { (key: String, value: String) in
-                return URLQueryItem(name: key, value: value)
-            }
-            urlComponents.queryItems?.append(contentsOf: queryItems)
-        }
-        guard let url = urlComponents.url else {
-            fatalError("Error: expected iTunes URL but instead it is nil")
-        }
-        return url
-    }
-
     
     // MARK: - Private
     
     private func parseResponse(data: Data?, response: URLResponse?, error: Error?) -> Result<[iTunesSearchResult], iTunesSearchError> {
+               
         guard let jsonData = data else {
-            return .failure(iTunesSearchError.missingData)
+            return .failure(iTunesSearchError.emptyData)
+        }
+
+        if let error = error {
+            return .failure(iTunesSearchError.unknown(error))
         }
         
         do {
             let searchResponse = try decoder.decode(iTunesSearchResponse.self, from: jsonData)
             return .success(searchResponse.results)
         } catch (let jsonError) {
-            return .failure(iTunesSearchError.badData(jsonError))
+            return .failure(iTunesSearchError.parsingData(jsonError))
         }
     }
 }

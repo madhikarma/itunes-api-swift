@@ -8,7 +8,7 @@
 import Foundation
 
 public enum iTunesSearchError: Error {
-    case missingData
-    case badData(Error?)
+    case emptyData
+    case parsingData(Error?)
     case unknown(Error?)
 }
