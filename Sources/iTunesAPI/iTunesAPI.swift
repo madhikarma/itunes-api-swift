@@ -26,7 +26,9 @@ public class iTunesSearchAPI {
     public func getResults(searchTerm: String, parameters: [String: String]?, completion: @escaping (Result<[iTunesSearchResult], iTunesSearchError>) -> ()) -> URLSessionTask {
         
         let url = buildSearchURL(searchTerm: searchTerm, parameters: parameters)
-        let task = session.dataTask(with: url) { (data, response, error) in
+        let task = session.dataTask(with: url) { [weak self] (data, response, error) in
+            guard let self = self else { return }
+            
             let result = self.parseResponse(data: data, response: response, error: error)
             DispatchQueue.main.async {
                 completion(result)
@@ -35,14 +37,12 @@ public class iTunesSearchAPI {
         task.resume()
         return task
     }
-    
-    
-    // MARK: - Lookup
     
     @discardableResult
     public func lookup(id: Int, parameters: [String: String]?, completion: @escaping (Result<[iTunesSearchResult], iTunesSearchError>) -> ()) -> URLSessionTask {
         let url = buildLookupURL(id: id, parameters: parameters)
-        let task = session.dataTask(with: url) { (data, response, error) in
+        let task = session.dataTask(with: url) { [weak self] (data, response, error) in
+            guard let self = self else { return }
             let result = self.parseResponse(data: data, response: response, error: error)
             DispatchQueue.main.async {
                 completion(result)
@@ -52,7 +52,8 @@ public class iTunesSearchAPI {
         return task
     }
     
-    // MARK: - Private
+    
+    // MARK: - Private - URLs
     
     private func buildLookupURL(id: Int, parameters: [String: String]?) -> URL {
 
@@ -87,9 +88,6 @@ public class iTunesSearchAPI {
         }
         return url
     }
-    
-    
-    // MARK: - Private
     
     private func parseResponse(data: Data?, response: URLResponse?, error: Error?) -> Result<[iTunesSearchResult], iTunesSearchError> {
                
