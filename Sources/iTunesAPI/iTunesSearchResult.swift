@@ -1,6 +1,6 @@
 //
 //  iTunesSearchResult.swift
-//  
+//
 //
 //  Created by Shagun Madhikarmi on 18/11/2019.
 //
@@ -18,13 +18,13 @@ public struct iTunesSearchResult: Codable {
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        
-        self.artistId = try container.decode(Int.self, forKey: .artistId)
-        self.artistName = try container.decode(String.self, forKey: .artistName)
-        self.artistViewUrl = try container.decodeIfPresent(URL.self, forKey: .artistViewUrl) ?? nil
-        self.artworkUrl100 = try container.decodeIfPresent(URL.self, forKey: .artworkUrl100) ?? nil
-        self.wrapperType = try container.decode(iTunesSearchResultType.self, forKey: .wrapperType)
-        self.collectionType = try container.decodeIfPresent(iTunesSearchResultCollectionType.self, forKey: .collectionType) ?? nil
-        self.collectionName = try container.decodeIfPresent(String.self, forKey: .collectionName) ?? nil
+
+        artistId = try container.decode(Int.self, forKey: .artistId)
+        artistName = try container.decode(String.self, forKey: .artistName)
+        artistViewUrl = try container.decodeIfPresent(URL.self, forKey: .artistViewUrl) ?? nil
+        artworkUrl100 = try container.decodeIfPresent(URL.self, forKey: .artworkUrl100) ?? nil
+        wrapperType = try container.decode(iTunesSearchResultType.self, forKey: .wrapperType)
+        collectionType = try container.decodeIfPresent(iTunesSearchResultCollectionType.self, forKey: .collectionType) ?? nil
+        collectionName = try container.decodeIfPresent(String.self, forKey: .collectionName) ?? nil
     }
 }

@@ -1,6 +1,6 @@
 //
 //  iTunesSearchResponse.swift
-//  
+//
 //
 //  Created by Beta on 18/11/2019.
 //
